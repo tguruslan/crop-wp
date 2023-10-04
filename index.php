@@ -3,7 +3,7 @@
 Plugin Name: Crop
 Plugin URI: https://github.com/tguruslan/crop-wp
 Description: Crop
-Version: 1.0
+Version: 1.1
 Author: ruslan
 Author URI: https://github.com/tguruslan
 */
@@ -75,9 +75,9 @@ echo '<label for="max_size"> Знайти фото більші за:<input type
 
         jQuery('#row-0 input').on("change", function() {
           if (jQuery(this).is(":checked")){
-            jQuery("#input-img tr td input[type=checkbox]").prop('checked', true);
+            jQuery("#input-img tr td input[type=checkbox]").prop('checked', true).trigger('change');
           }else{
-            jQuery("#input-img tr td  input[type=checkbox]").prop('checked', false);
+            jQuery("#input-img tr td  input[type=checkbox]").prop('checked', false).trigger('change');
           }
         });
 
@@ -209,7 +209,7 @@ add_action('wp_ajax_tgu_image', function() {
     $fwidth = $_POST['fwidth'];
     $fheight = $_POST['fheight'];
     $path = get_attached_file( $lo );
-    include '../wp-content/plugins/crop/lib/WideImage.php';
+    include plugin_dir_path( __FILE__ ).'/lib/WideImage.php';
     WideImage::loadFromFile($path)->resize($fwidth, $fheight)->saveToFile($path);
     echo "<div>".$path."</div>";
     die();
